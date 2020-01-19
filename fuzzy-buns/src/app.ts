@@ -9,23 +9,21 @@ let io = require("socket.io")(http);
 
 console.log("Server started.");
 
-var users = {};
+var users = [];
+
+game.init_game_state();
 
 io.on("connection", function(socket: any) {
   console.log("A user connected");
 
   socket.on("register", function(message: any) {
-    users[message.deviceID] = message;
+    users.push(message);
+    game.handle_state_change(game.process_user_update(message, "PLAYER_STATE"));
     socket.broadcast.emit("new registration", users);
   });
 
   socket.on("start", function(message: any) {
-    // Player choose start.
-    // Determine Pacman
-    // Generate dots
-    // Send back dots
-    // Set to hide a
-    // pass data to process user update
-    // result to handle state change
+    game.process_user_update(message, "GAME_STATE");
+    game.handle_state_change(game.States.Chase);
   });
 });

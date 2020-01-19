@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Button, StyleSheet, View, Platform, Dimensions} from "react-native";
-import MapView, {Marker, AnimatedRegion, PROVIDER_GOOGLE} from 'react-native-maps';
+import { Button, StyleSheet, View, Platform, Dimensions } from "react-native";
+import MapView, { Marker, AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
 
-const {width, height} = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.002;
@@ -245,13 +245,7 @@ export default class header extends Component {
   }
 
   UpdateLocation = () => {
-<<<<<<< HEAD
-  
-
-    this.watchID = navigator.geolocation.watchPosition(
-=======
     navigator.geolocation.watchPosition(
->>>>>>> 78c3056f42100b52e7a8e96a60f7a371c5de8da7
       position => {
         const { coordinate } = this.state;
         const { latitude, longitude } = position.coords;
@@ -261,33 +255,35 @@ export default class header extends Component {
           longitude
         };
 
-        {(async () => {
-          console.log('---------------------------------------------')
-          console.log(latitude + ', ' + longitude)
+        {
+          (async () => {
+            console.log('---------------------------------------------')
+            console.log(latitude + ', ' + longitude)
 
-          await fetch('https://roads.googleapis.com/v1/snapToRoads?path=' + latitude + ',' + longitude + '&key=AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8')
-          .then(response => response.json())
-          .then((responseJson)=> {
-            const a = responseJson.snappedPoints[0].location
+            await fetch('https://roads.googleapis.com/v1/snapToRoads?path=' + latitude + ',' + longitude + '&key=AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8')
+              .then(response => response.json())
+              .then((responseJson) => {
+                const a = responseJson.snappedPoints[0].location
 
-            this.setState({
-              latitude: a.latitude,
-              longitude: a.longitude
-            });
+                this.setState({
+                  latitude: a.latitude,
+                  longitude: a.longitude
+                });
 
-            newCoordinate = {latitude: this.state.latitude, longitude: this.state.longitude}
+                newCoordinate = { latitude: this.state.latitude, longitude: this.state.longitude }
 
-            coordinate.timing(newCoordinate).start();
+                coordinate.timing(newCoordinate).start();
 
-            console.log(this.state.latitude + ', ' + this.state.longitude)
-          })
-          .catch(error => console.log('Too far from road')) //to catch the errors if any
-        })();}
+                console.log(this.state.latitude + ', ' + this.state.longitude)
+              })
+              .catch(error => console.log('Too far from road')) //to catch the errors if any
+          })();
+        }
 
       },
       error => console.log(error),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );      
+    );
   }
 
   getMapRegion = () => ({
@@ -343,7 +339,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    bottom:0,
+    bottom: 0,
     right: 0
   }
 });
