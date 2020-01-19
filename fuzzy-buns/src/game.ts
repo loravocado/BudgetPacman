@@ -1,5 +1,5 @@
 export class Player {
-  UUID: string;
+  UUID_string: string;
   name: string;
   lat: number;
   lng: number;
@@ -9,7 +9,7 @@ export class Pacman extends Player {
 
   constructor(player: Player) {
     super();
-    this.UUID = player.UUID;
+    this.UUID_string = player.UUID_string;
     this.lat = player.lat;
     this.lng = player.lng;
     this.name = player.name;
@@ -76,7 +76,7 @@ export function handle_state_change(new_state: States) {
 export function process_user_update(info, msg_type) {
   let player: Player = null;
   game.players.forEach(element => {
-    if (info.deviceId == element.UUID) {
+    if (info.deviceId == element.UUID_string) {
       player = element;
       return;
     }
@@ -89,7 +89,7 @@ export function process_user_update(info, msg_type) {
       player.lat = info.lat;
       player.lng = info.lng;
       if (
-        player.UUID == game.main.UUID &&
+        player.UUID_string == game.main.UUID_string &&
         (game.state == States.Hide || game.state == States.Chase)
       ) {
         info.eatenPellets.forEach(element => {
@@ -130,7 +130,7 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 function register_user(info) {
   if (game.state == States.Lobby) {
     let noob: Player = new Player();
-    noob.UUID = info.deviceId;
+    noob.UUID_string = info.deviceId;
     noob.lat = info.lat;
     noob.lng = info.lng;
     noob.name = info.name;

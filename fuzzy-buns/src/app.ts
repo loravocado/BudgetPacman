@@ -20,7 +20,7 @@ io.on("connection", function(socket: any) {
     var processUpdate = game.process_user_update(message, "PLAYER_STATE");
     var newState = game.handle_state_change(processUpdate);
     console.log("hi");
-    socket.emit("new registration", users);
+    io.broadcast.emit("new registration", users);
   });
 
   socket.on("start", function(message: any) {
