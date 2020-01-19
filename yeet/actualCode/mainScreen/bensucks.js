@@ -285,7 +285,7 @@ export default class header extends Component {
           })
           .catch(error => console.log('Too far from road')) //to catch the errors if any
         })();}
-        
+
       },
       error => console.log(error),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -346,7 +346,6 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginBottom: 70
   },
   map: {
     position: 'absolute',
