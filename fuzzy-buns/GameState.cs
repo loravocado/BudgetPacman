@@ -24,8 +24,7 @@ namespace fuzzy_buns
         private Socket socket;
 
         public Player(Socket connection ) => this.socket = connection;
-
-        public PlayerState
+        
 
     }
 }
