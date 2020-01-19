@@ -4,7 +4,18 @@ import gameState from '../backend/GameState.js';
 import serverSocket from '../backend/ServerConnection.js';
 import GPS from '../gpsScreen/gpsScreen.js';
 
-var SampleArray = ["Hello", "I love", "Apples"];
+var SampleArray = [{
+    name: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'First Item',
+  },
+  {
+    name: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Second Item',
+  },
+  {
+    name: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Third Item',
+  }];
 
 export default class MainFriends extends Component {
   state = {
@@ -45,7 +56,7 @@ export default class MainFriends extends Component {
                   <View style={{ marginLeft: 40, marginRight: 40, marginTop: 5 }}>
                     <FlatList
                       data={SampleArray}
-                      keyExtractor={item => item}
+                      keyExtractor={item => item.name}
                       renderItem={({ item }) => (
                         <View style={{ margin: 15, alignItems: 'flex-start' }} >
                           <Text style={{ fontSize: 20, paddingBottom: 15, color: 'white' }}>{item}</Text>

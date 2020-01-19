@@ -244,8 +244,8 @@ export default class header extends Component {
   }
 
   UpdateLocation = () => {
-    geolocation.setRNConfiguration(config)
-    
+  
+
     this.watchID = navigator.geolocation.watchPosition(
       position => {
         const { coordinate } = this.state;
