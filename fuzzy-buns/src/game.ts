@@ -142,12 +142,14 @@ function register_user(info) {
 }
 
 function generate_pts(lat: number, lng: number) {
+  console.log("Generating Pellets");
   const spawn = require("child_process").spawn;
   const pythonProcess = spawn("python", ["roads/start.py", lat, lng]);
 
   let ptId = 0;
 
   pythonProcess.stdout.on("data", data => {
+    console.log("Data returned");
     let splitData = data.split("/\r?\n/");
     splitData.forEach(element => {
       let cords = splitData.split(",");
