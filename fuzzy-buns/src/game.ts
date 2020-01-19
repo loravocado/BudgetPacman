@@ -5,16 +5,19 @@ export class Player {
   name: string;
   lat: number;
   lng: number;
+
+  constructor(uniqueID: string, _name: string, _lat: number, _lng: number) {
+    this.UUID_string = uniqueID;
+    this.name = _name;
+    this.lat = _lat;
+    this.lng = _lng;
+  }
 }
 export class Pacman extends Player {
   lives: number;
 
-  constructor(player: Player) {
-    super();
-    this.UUID_string = player.UUID_string;
-    this.lat = player.lat;
-    this.lng = player.lng;
-    this.name = player.name;
+  constructor(uniqueID: string, _name: string, _lat: number, _lng: number) {
+    super(uniqueID, _name, _lat, _lng);
     this.lives = 3;
   }
 }
