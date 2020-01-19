@@ -3,26 +3,6 @@ import {View, Image, StyleSheet, Text, Button, Modal} from 'react-native';
 import Ben from '../mainScreen/bensucks.js'
 import gameState from '../backend/GameState.js'
 
-var ihatethis = [
-   {
-   "deviceID": "1393C686-5BAE-444A-B51C-0BFB93448DCE",
-   "eatenPellets":'',
-   "isPacman": false,
-   "lat": 0,
-   "lng": 0,
-   "name": "Hi",
-   "pellets": '',
- },
-{
-   "deviceID": "6461A10A-2BAF-4EAA-8ABA-4F7F8E67EB6C",
-   "eatenPellets": 'Array []',
-   "isPacman": false,
-   "lat": 0,
-   "lng": 0,
-   "name": "H",
-   "pellets":' Array []',
- },
-]
 
 export default class gpsScreen extends Component {
   state = {
@@ -87,7 +67,8 @@ const main_header = StyleSheet.create({
     borderRadius:5,
     height:35,
     width: 150,
-    paddingHorizontal:50,
+    alignItems:'center',
+    justifyContent:'center',
     marginBottom:10
 
   }

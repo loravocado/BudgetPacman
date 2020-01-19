@@ -4,26 +4,6 @@ import gameState from '../backend/GameState.js';
 import serverSocket from '../backend/ServerConnection.js';
 import GPS from '../gpsScreen/gpsScreen.js';
 
-var ihatethis = [
-   {
-   "deviceID": "1393C686-5BAE-444A-B51C-0BFB93448DCE",
-   "eatenPellets":'',
-   "isPacman": false,
-   "lat": 0,
-   "lng": 0,
-   "name": "Hi",
-   "pellets": '',
- },
-{
-   "deviceID": "6461A10A-2BAF-4EAA-8ABA-4F7F8E67EB6C",
-   "eatenPellets": 'Array []',
-   "isPacman": false,
-   "lat": 0,
-   "lng": 0,
-   "name": "H",
-   "pellets":' Array []',
- },
-]
 
 export default class MainFriends extends Component {
   state = {
