@@ -25,8 +25,10 @@ io.on("connection", function(socket: any) {
 
   socket.on("start", function(message: any) {
     console.log("Starting game...");
+    socket.emit("sync");
     game.process_user_update(message, "GAME_STATE");
-    game.handle_state_change(game.States.Hide);
+    var newstate = game.handle_state_change(game.States.Hide);
+    console.log(newstate);
     socket.emit("start hide");
     game.handle_state_change(game.States.Chase);
   });

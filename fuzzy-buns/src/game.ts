@@ -63,7 +63,7 @@ export function handle_state_change(new_state: States) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
       game.main = new Pacman(game.players[playerIndex]);
       game.players[playerIndex] = game.main;
-      return {};
+      return game.players;
     } else if (game.state == States.Chase) {
       return {};
     } else if (game.state == States.GameOver) {
@@ -137,7 +137,7 @@ function register_user(info) {
     game.players.concat(noob);
     if (!pelgen) {
       pelgen = true;
-      generate_pts(info.lat, info.lng);
+      // generate_pts(info.lat, info.lng);
     }
   }
 }
