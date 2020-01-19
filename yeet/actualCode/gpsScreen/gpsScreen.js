@@ -41,7 +41,8 @@ export default class gpsScreen extends Component {
               <Ben />
             </View>
 
-            <View style={{ flex: 1, backgroundColor: this.state.color }}>
+            <View style={{ flex: 1, backgroundColor: this.state.color, justifyContent:'center', paddingLeft:10 }}>
+              <Text style={{color:'white', fontSize:20}}>Points: 0</Text>
             </View>
           </View>
 
