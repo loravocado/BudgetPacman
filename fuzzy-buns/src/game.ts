@@ -1,4 +1,4 @@
-import {PythonShell} from 'python-shell';
+import { PythonShell } from "python-shell";
 
 export class Player {
   UUID_string: string;
@@ -61,7 +61,7 @@ export function handle_state_change(new_state: States) {
       return null;
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
-      console.log(game.players[playerIndex]);
+      console.log(game.players);
       game.main = new Pacman(game.players[playerIndex]);
       game.players[playerIndex] = game.main;
       return game.players;
@@ -147,17 +147,17 @@ function generate_pts(lat: number, lng: number) {
   console.log("Generating Pellets");
 
   let options = {
-    mode: 'text',
-    pythonPath: 'python2',
-    pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: 'path/to/my/scripts',
+    mode: "text",
+    pythonPath: "python2",
+    pythonOptions: ["-u"], // get print results in real-time
+    scriptPath: "path/to/my/scripts",
     args: [lat, lng]
   };
 
-  PythonShell.run('my_script.py', options, function (err, results) {
+  PythonShell.run("my_script.py", options, function(err, results) {
     if (err) console.log(err);
     // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
+    console.log("results: %j", results);
     // console.log("Data returned");
     // let splitData = data.split("/\r?\n/");
     // let ptId = 0;
@@ -177,9 +177,6 @@ function generate_pts(lat: number, lng: number) {
 function callName() {
   console.log("callname called");
 
-  
-   
-  
   // process.stdout.on("data", data => {
 
   // });
