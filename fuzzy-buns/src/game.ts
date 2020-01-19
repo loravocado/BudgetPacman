@@ -139,6 +139,7 @@ function register_user(info) {
     noob.lng = info.lng;
     noob.name = info.name;
     game.players.push(noob);
+    console.log(game);
     if (!pelgen) {
       pelgen = true;
       // generate_pts(info.lat, info.lng);
