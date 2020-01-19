@@ -146,10 +146,10 @@ function generate_pts(lat: number, lng: number) {
   console.log("Generating Pellets");
 
   let options = {
-    mode: 'text',
-    pythonPath: 'python2',
-    pythonOptions: ['-u'], // get print results in real-time
-    scriptPath: 'path/to/my/scripts',
+    mode: "text",
+    pythonPath: "python2",
+    pythonOptions: ["-u"], // get print results in real-time
+    scriptPath: "path/to/my/scripts",
     args: [lat, lng]
   };
 
