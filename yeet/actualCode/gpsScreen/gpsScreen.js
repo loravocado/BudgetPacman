@@ -40,6 +40,8 @@ const main_header = StyleSheet.create({
     backgroundColor: '#C11A1A',
     marginHorizontal: 100,
     borderRadius:5,
+    height:35,
+    width: 150,
     paddingHorizontal:50,
     marginBottom:10
 
