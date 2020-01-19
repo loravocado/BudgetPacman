@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
+import {View, StyleSheet, Image, Button, Text, Modal, TextInput} from 'react-native';
+import MainFriends from '../findFriends/mainFriends.js'
 
-export default class InputNameScreen extends Component {
+ export default class InputNameScreen extends Component {
   state = {
     modalVisible: false,
   };
 
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
-  }
-
-
-
-  constructor(props) {
-  super(props);
-  this.state = {text: ''};
-  }
+  };
 
   render() {
+
     return (
       <View>
         <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
+          onRequestClose={() => {this.setModalVisible(true)}}
           >
 
           <View style={inputNameScreen.container}>
@@ -40,15 +36,8 @@ export default class InputNameScreen extends Component {
                style={inputNameScreen.ghost_image}
                source={require('../../images/red_ghost.png')}
               />
-              <View style={inputNameScreen.inputContainer}>
-                <TextInput
-                   style={inputNameScreen.inputText}
-                   placeholder="Your name"
-                   onChangeText={(text) => this.setState({text})}
-                   value={this.state.text}
+            <MainFriends/>
 
-                 />
-               </View>
             </View>
             <View style={inputNameScreen.borderContainer}>
               <Image
@@ -113,17 +102,5 @@ const inputNameScreen = StyleSheet.create({
     color: 'white',
     fontSize: 35
   },
-  inputContainer: {
-    margin:20,
-    width: 200,
-    height:35,
-    borderRadius:5,
-    backgroundColor:'white',
-    justifyContent:'center'
-  },
-  inputText: {
-    marginHorizontal:10,
-    fontSize:20,
-    color:'#282626',
-  }
+
 })

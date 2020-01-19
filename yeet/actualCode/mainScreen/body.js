@@ -3,6 +3,9 @@ import {View, StyleSheet, Image, Button, Text, Modal} from 'react-native';
 import InputName from '../inputName/inputNameScreen.js';
 
 export default class body extends Component {
+  state = {
+    modalVisible: false,
+  };
   render() {
     return (
       <View style={main_body.container}>
