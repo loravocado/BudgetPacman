@@ -23,7 +23,7 @@ class GameMaster {
 
 let game : GameMaster = null;
 
-function init_game_state() {
+export function init_game_state() {
     if (game == null) {
         game = new GameMaster();
         game.state = States.Lobby;
@@ -31,7 +31,26 @@ function init_game_state() {
     }
 }
 
-function process_user_update(info) {
+export function handle_state_change(new_state : States) {
+    if (new_state != game.state) {
+        game.state = new_state;
+        if (game.state == States.Lobby) {
+            game.players = [];
+            game.main = null;
+            return null;
+        } else if (game.state == States.Hide) {
+            return {};
+        } else if (game.state == States.Chase) {
+            return {};
+        } else if (game.state == States.GameOver) {
+            return {};  // Return message about user
+        }
+    }
+
+    return null;
+}
+
+export function process_user_update(info, msg_type) {
 
     let player : Player = null;
     game.players.forEach(element => {
@@ -41,10 +60,10 @@ function process_user_update(info) {
         }
     });
 
-    if (player == null && info.type == "PLAYER_STATE") {
-        register_user(info)
+    if (player == null && msg_type == "PLAYER_STATE") {
+        register_user(info);
     } else {
-        if (info.type == "PLAYER_STATE") {
+        if (msg_type == "PLAYER_STATE") {
             player.lat = info.lat;
             player.lng = info.lng;
             if (player.UUID == game.main.UUID && (game.state == States.Hide || game.state == States.Chase)) {
@@ -61,7 +80,7 @@ function process_user_update(info) {
                     return States.GameOver;
                 }
             }
-        } else if (info.type == "GAME_STATE" && game.state == States.Lobby && game.players.length > 1) {
+        } else if (msg_type == "GAME_STATE" && game.state == States.Lobby && game.players.length > 1) {
             return States.Chase;
         }
     }
