@@ -20,8 +20,14 @@ export default class MainFriends extends Component {
   refresh = () => {
 
     this.setState({ data: serverSocket.users })
+    // if (this.state.data.length == 0) {
+    //   console.log('first player')
+    //   gameState.isPacman = true;
+    // }  
+
   }
 
+  
 
   render() {
 
