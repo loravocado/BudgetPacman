@@ -23,7 +23,7 @@ const main_header = StyleSheet.create({
     paddingTop:10,
   },
   logo: {
-    width: 240,
-    height: 74
+    width: 224,
+    height: 71
   }
 });
