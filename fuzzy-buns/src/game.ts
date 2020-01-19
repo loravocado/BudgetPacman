@@ -1,18 +1,23 @@
+import { PythonShell } from "python-shell";
+
 export class Player {
-  UUID: string;
+  UUID_string: string;
   name: string;
   lat: number;
   lng: number;
+
+  constructor(uniqueID: string, _name: string, _lat: number, _lng: number) {
+    this.UUID_string = uniqueID;
+    this.name = _name;
+    this.lat = _lat;
+    this.lng = _lng;
+  }
 }
 export class Pacman extends Player {
   lives: number;
 
-  constructor(player: Player) {
-    super();
-    this.UUID = player.UUID;
-    this.lat = player.lat;
-    this.lng = player.lng;
-    this.name = player.name;
+  constructor(uniqueID: string, _name: string, _lat: number, _lng: number) {
+    super(uniqueID, _name, _lat, _lng);
     this.lives = 3;
   }
 }
@@ -37,8 +42,6 @@ class GameMaster {
   pellets: Array<Pellet>;
 }
 
-let map_x: number;
-let map_y: number;
 let pelgen: boolean;
 
 let game: GameMaster = null;
@@ -53,6 +56,7 @@ export function init_game_state() {
 }
 
 export function handle_state_change(new_state: States) {
+  console.log(game.state);
   if (new_state != game.state) {
     game.state = new_state;
     if (game.state == States.Lobby) {
@@ -61,7 +65,13 @@ export function handle_state_change(new_state: States) {
       return null;
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
-      game.main = new Pacman(game.players[playerIndex]);
+      let pacmanize = game.players[playerIndex];
+      game.main = new Pacman(
+        pacmanize.UUID_string,
+        pacmanize.name,
+        pacmanize.lat,
+        pacmanize.lng
+      );
       game.players[playerIndex] = game.main;
       return game.players;
     } else if (game.state == States.Chase) {
@@ -76,7 +86,7 @@ export function handle_state_change(new_state: States) {
 export function process_user_update(info, msg_type) {
   let player: Player = null;
   game.players.forEach(element => {
-    if (info.deviceId == element.UUID) {
+    if (info.deviceID == element.UUID_string) {
       player = element;
       return;
     }
@@ -89,7 +99,7 @@ export function process_user_update(info, msg_type) {
       player.lat = info.lat;
       player.lng = info.lng;
       if (
-        player.UUID == game.main.UUID &&
+        player.UUID_string == game.main.UUID_string &&
         (game.state == States.Hide || game.state == States.Chase)
       ) {
         info.eatenPellets.forEach(element => {
@@ -129,60 +139,59 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 
 function register_user(info) {
   if (game.state == States.Lobby) {
-    let noob: Player = new Player();
-    noob.UUID = info.deviceId;
-    noob.lat = info.lat;
-    noob.lng = info.lng;
-    noob.name = info.name;
-    game.players.concat(noob);
+    let noob: Player = {
+      UUID_string: info.deviceID,
+      lat: info.lat,
+      lng: info.lng,
+      name: info.name
+    };
+    game.players.push(noob);
     if (!pelgen) {
       pelgen = true;
-      // generate_pts(info.lat, info.lng);
+      generate_pts(info.lat, info.lng);
     }
   }
 }
 
 function generate_pts(lat: number, lng: number) {
-  map_x = lat;
-  map_y = lng;
-  console.log("Generating Pellets");
+  let options = {
+    mode: "text",
+    pythonPath: "python2",
+    pythonOptions: ["-u"], // get print results in real-time
+    scriptPath: "roads/script.py",
+    args: [lat.toString(), lng.toString()]
+  };
 
-  callName();
+  // try {
+  //   PythonShell.run("my_script.py", options, function(err, results) {
+  //     if (err) console.log(err);
+  //   // results is an array consisting of messages collected during execution
+  //     console.log("results: %j", results);
+  //   // console.log("Data returned");
+  //   // let splitData = data.split("/\r?\n/");
+  //   // let ptId = 0;
+  //   // splitData.forEach(element => {
+  //   //   let cords = splitData.split(",");
+  //   //   let pel = new Pellet();
+  //   //   pel.id = ptId;
+  //   //   pel.lat = cords[0];
+  //   //   pel.lng = cords[1];
+  //   //   ptId++;
+  //   //   game.pellets.concat(pel);
+  //   //   console.log([pel.lat, pel.lng]);
+  //   // });
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
 }
 
 function callName() {
   console.log("callname called");
-  // Use child_process.spawn method from
-  // child_process module and assign it
-  // to variable spawn
-  var spawn = require("child_process").spawn;
 
-  // Parameters passed in spawn -
-  // 1. type_of_script
-  // 2. list containing Path of the script
-  //    and arguments for the script
+  // process.stdout.on("data", data => {
 
-  // E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
-  // so, first name = Mike and last name = Will
-  var process = spawn("python", ["roads/start.py", map_x, map_y]);
-
-  // Takes stdout data from script which executed
-  // with arguments and send this data to res object
-  process.stdout.on("data", data => {
-    console.log("Data returned");
-    let splitData = data.split("/\r?\n/");
-    let ptId = 0;
-    splitData.forEach(element => {
-      let cords = splitData.split(",");
-      let pel = new Pellet();
-      pel.id = ptId;
-      pel.lat = cords[0];
-      pel.lng = cords[1];
-      ptId++;
-      game.pellets.concat(pel);
-      console.log([pel.lat, pel.lng]);
-    });
-  });
+  // });
   process.stderr.on("data", data => {
     console.log(data.toString());
   });
