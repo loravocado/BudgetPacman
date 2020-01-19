@@ -65,7 +65,13 @@ export function handle_state_change(new_state: States) {
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
       console.log(game.players);
-      game.main = new Pacman(game.players[playerIndex]);
+      let pacmanize = game.players[playerIndex];
+      game.main = new Pacman(
+        pacmanize.UUID_string,
+        pacmanize.name,
+        pacmanize.lat,
+        pacmanize.lng
+      );
       game.players[playerIndex] = game.main;
       return game.players;
     } else if (game.state == States.Chase) {
