@@ -52,6 +52,10 @@ export default class gpsScreen extends Component {
             title="Start"
             onPress={() => {
               serverSocket.socket.emit("start")
+              serverSocket.socket.on("sync", function (message) {
+                console.log(message);
+              });
+
               this.setGpsVisible(true);
               this.gameMode(gameState.isPacman)
             }}

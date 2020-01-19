@@ -105,9 +105,6 @@ export function process_user_update(info, msg_type) {
           let pel = game.pellets.find(element2 => element2.id == element.id);
           game.pellets.splice(game.pellets.indexOf(pel), 1);
         });
-        if (game.pellets.length == 0) {
-          return States.GameOver;
-        }
       } else if (
         game.state == States.Chase &&
         compareCords(player.lat, player.lng, game.main.lat, game.main.lng)
