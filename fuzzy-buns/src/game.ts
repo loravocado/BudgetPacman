@@ -157,6 +157,7 @@ function generate_pts(lat: number, lng: number) {
       pel.lng = cords[1];
       ptId++;
       game.pellets.concat(pel);
+      console.log([pel.lat, pel.lng]);
     });
   });
 }

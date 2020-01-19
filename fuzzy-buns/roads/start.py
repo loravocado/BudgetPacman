@@ -59,11 +59,28 @@ def get_snapped(pts):
     return snapped
 
 def final_pass(pts):
-    for pt in pts:
-        print(pt)
+
+    fin = []
+
+    i = 0
+
+    while i < len(pts):
+        j = i + 1
+        while j < len(pts):
+            if pts[i].distance(pts[j]) < 0.007:
+                del pts[j]
+            else:
+                j += 1
+        fin.append(pts[i])
+        i += 1
+
+    return fin
+        
+        
 
 
 if __name__ == "__main__":
     pellets = carpet_bomb(float(sys.argv[1]), float(sys.argv[2]), radius)
     snapped = get_snapped(pellets)
-    final_pass(snapped)
+    for item in final_pass(snapped):
+        print(item)
