@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
 import gameState from '../backend/GameState.js';
 import GPS from '../gpsScreen/gpsScreen.js';
 
-=======
-import { View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight } from 'react-native';
-import gameState from '../backend/GameState.js'
-import serverSocket from '../backend/ServerConnection.js';
->>>>>>> 4dc9efa33869de797e5582540b02f02dfab0f6ec
 
 export default class MainFriends extends Component {
   state = {
