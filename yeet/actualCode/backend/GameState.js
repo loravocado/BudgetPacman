@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 
 class GameState {
-    static instance = ServerConnection.instance || new ServerConnection();
+    static instance = GameState.instance || new GameState();
 
     constructor() {
         super()
@@ -14,3 +14,7 @@ class GameState {
 
 
 }
+
+const gameState = GameState.instance;
+
+export default gameState;
