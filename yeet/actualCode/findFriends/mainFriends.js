@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, FlatList, Image, Button, Text, Modal, TextInput, TouchableHighlight } from 'react-native';
+import { View, StyleSheet, FlatList, Image, Button, Text, Modal, TextInput, TouchableOpacity} from 'react-native';
 import gameState from '../backend/GameState.js';
 import serverSocket from '../backend/ServerConnection.js';
 import GPS from '../gpsScreen/gpsScreen.js';
@@ -10,15 +10,17 @@ export default class MainFriends extends Component {
     text: '',
     isVisible: false,
     friend: '',
+    data: serverSocket.users
   };
 
   setIsVisible(visible) {
     this.setState({ isVisible: visible });
   }
 
-  AddItemsToArray = () => {
-    SampleArray = SampleArray.concat(this.state.friend)
+  refresh = () => {
+    this.setState({data: serverSocket.users})
   }
+
 
   render() {
 
@@ -31,6 +33,11 @@ export default class MainFriends extends Component {
           <View style={{ flex: 1 }}>
             <View style={friends.headerContainer}>
               <Text style={friends.text}> Lobby </Text>
+              <TouchableOpacity style={{position:'absolute', right:25, alignSelf:'center'}} onPress={() => {this.refresh()}}>
+                <Image
+                  style={{height:30, width:30}}
+                  source={require('../../images/refresh.png')}/>
+              </TouchableOpacity>
             </View>
             <View style={{ flex: 10, flexDirection: 'row', backgroundColor: '#282626' }}>
               <View style={friends.borderContainer}>
@@ -43,11 +50,11 @@ export default class MainFriends extends Component {
                 <View style={{ flex: 10 }}>
                   <View style={{ marginLeft: 40, marginRight: 40, marginTop: 5 }}>
                     <FlatList
-                      data={serverSocket.users} // Dictionary with deviceID as key and gameState as value.
+                      data={this.state.data}
                       keyExtractor={item => item.name}
                       renderItem={({ item }) => (
-                        <View style={{ margin: 15, alignItems: 'flex-start', backgroundColor:'white', borderRadius:10 }} >
-                          <Text style={{ fontSize: 20, paddingBottom: 15, color: 'white' }}>{item.name}</Text>
+                        <View style={{ margin: 15, alignItems: 'flex-start', justifyContent:'center', backgroundColor:'white', borderRadius:10 }} >
+                          <Text style={{ fontSize: 20, color: 'black', paddingHorizontal:12, paddingVertical:8 }}>{item.name}</Text>
 
                         </View>
                       )}
@@ -78,8 +85,8 @@ export default class MainFriends extends Component {
             onChangeText={text => this.setState({ text })}
             onSubmitEditing={() => {
               gameState.name = this.state.text;
-              serverSocket.register();
-              console.log(serverSocket.users)
+               serverSocket.register();
+
               this.setIsVisible(true);
             }}
           />
@@ -123,6 +130,7 @@ const friends = StyleSheet.create({
     justifyContent: 'center',
   },
   headerContainer: {
+    flexDirection:'row',
     flex: 1,
     backgroundColor: '#C11A1A',
     alignItems: 'center',

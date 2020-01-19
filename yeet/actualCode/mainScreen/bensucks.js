@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, View, Platform, Dimensions } from "react-native";
 import MapView, { Marker, AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
-import Pacman from '../../images/pacman.png';
+import gameState from '../backend/GameState.js';
 
 const { width, height } = Dimensions.get("window");
 
@@ -237,11 +237,13 @@ export default class header extends Component {
     }
   ]
 
+
   constructor(props) {
     super(props);
 
     this.state = {
       latitude: 53.526,
+      indicator: require('../../images/small_red.png'),
       longitude: -113.530,
       coordinate: new AnimatedRegion({
         latitude: 0,
@@ -253,6 +255,12 @@ export default class header extends Component {
     };
   }
 
+  gameMode(isPacman) {
+    if (isPacman == true) {
+      this.setState({indicator:require('../../images/pacman.png')});
+    }
+  };
+
   UpdateLocation = () => {
     if (first) {
       first = false;
@@ -260,37 +268,37 @@ export default class header extends Component {
         position => {
           const { coordinate } = this.state;
           const { latitude, longitude } = position.coords;
-  
+
           var newCoordinate = {
             latitude,
             longitude
           };
-  
+
           {
             (async () => {
               console.log('---------------------------------------------')
               console.log(latitude + ', ' + longitude)
-  
+
               await fetch('https://roads.googleapis.com/v1/snapToRoads?path=' + latitude + ',' + longitude + '&key=AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8')
                 .then(response => response.json())
                 .then((responseJson) => {
                   const a = responseJson.snappedPoints[0].location
-  
+
                   this.setState({
                     latitude: a.latitude,
                     longitude: a.longitude
                   });
-  
+
                   newCoordinate = { latitude: this.state.latitude, longitude: this.state.longitude }
-  
+
                   coordinate.timing(newCoordinate).start();
-  
+
                   console.log(this.state.latitude + ', ' + this.state.longitude)
                 })
                 .catch(error => console.log('Too far from road')) //to catch the errors if any
             })();
           }
-  
+
         },
         error => console.log(error),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -300,43 +308,43 @@ export default class header extends Component {
         position => {
           const { coordinate } = this.state;
           const { latitude, longitude } = position.coords;
-  
+
           var newCoordinate = {
             latitude,
             longitude
           };
-  
+
           {
             (async () => {
               console.log('---------------------------------------------')
               console.log(latitude + ', ' + longitude)
-  
+
               await fetch('https://roads.googleapis.com/v1/snapToRoads?path=' + latitude + ',' + longitude + '&key=AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8')
                 .then(response => response.json())
                 .then((responseJson) => {
                   const a = responseJson.snappedPoints[0].location
-  
+
                   this.setState({
                     latitude: a.latitude,
                     longitude: a.longitude
                   });
-  
+
                   newCoordinate = { latitude: this.state.latitude, longitude: this.state.longitude }
-  
+
                   coordinate.timing(newCoordinate).start();
-  
+
                   console.log(this.state.latitude + ', ' + this.state.longitude)
                 })
                 .catch(error => console.log('Too far from road')) //to catch the errors if any
             })();
           }
-  
+
         },
         error => console.log(error),
         { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
       );
     }
-    
+
   }
 
   getMapRegion = () => ({
@@ -365,15 +373,15 @@ export default class header extends Component {
             }}
             coordinate={this.state.coordinate}
             title={'Lora'}
-            description={'Sucks'}  
-            image={require('../../images/pacman.png')}  
+            description={'Sucks'}
+            image={this.state.indicator}
           />
 
           {test_pellets.map((prop) => {
             return (
               <Marker.Animated
                 coordinate={{latitude: prop[0], longitude: prop[1]}}
-                image={require('../../images/pellet.png')}  
+                image={require('../../images/pellet.png')}
               />
             );
           })}
@@ -384,6 +392,7 @@ export default class header extends Component {
           title='Update Location'
           onPress={async () => {
             this.UpdateLocation()
+            this.gameMode(gameState.isPacman)
           }}
         >
         </Button>

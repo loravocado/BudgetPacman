@@ -7,7 +7,7 @@ class GameState {
         this.lat = 0.0;
         this.lng = 0.0;
         this.deviceID = Constants.installationId.toUpperCase();
-        this.isPacman = true;
+        this.isPacman = false;
         this.eatenPellets = [];
         this.name = "";
         this.pellets = [];
