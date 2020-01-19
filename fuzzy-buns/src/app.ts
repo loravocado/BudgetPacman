@@ -18,9 +18,11 @@ console.log("Server started.");
 io.on("connection", function(socket: any) {
   console.log("a user connected");
   // whenever we receive a 'message' we log it out
-  socket.on("login", function(message: any) {
+  socket.on("register", function(message: any) {
+    console.log("User logged in.");
     console.log(message);
   });
+
   socket.on("update", function(message: any) {
     socket.emit("broadcast", message);
   });

@@ -8,7 +8,7 @@ class ServerConnection {
     }
 
     Register() {
-        this.socket.emit("login", gameState);
+        this.socket.emit("register", gameState);
     }
 }
 
