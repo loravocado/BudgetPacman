@@ -37,10 +37,15 @@ class GameMaster {
   pellets: Array<Pellet>;
 }
 
+let map_x: number;
+let map_y: number;
+let pelgen: boolean;
+
 let game: GameMaster = null;
 
 export function init_game_state() {
   if (game == null) {
+    pelgen = false;
     game = new GameMaster();
     game.state = States.Lobby;
     game.players = [];
@@ -58,7 +63,7 @@ export function handle_state_change(new_state: States) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
       game.main = new Pacman(game.players[playerIndex]);
       game.players[playerIndex] = game.main;
-      return {};
+      return game.players;
     } else if (game.state == States.Chase) {
       return {};
     } else if (game.state == States.GameOver) {
@@ -124,31 +129,49 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 
 function register_user(info) {
   if (game.state == States.Lobby) {
-    let create_pellets: boolean = false;
-    if (game.players.length == 0) {
-      create_pellets = true;
-    }
     let noob: Player = new Player();
     noob.UUID = info.deviceId;
     noob.lat = info.lat;
     noob.lng = info.lng;
     noob.name = info.name;
     game.players.concat(noob);
-
-    if (create_pellets) {
-      generate_pts(info.lat, info.lng);
+    if (!pelgen) {
+      pelgen = true;
+      // generate_pts(info.lat, info.lng);
     }
   }
 }
 
 function generate_pts(lat: number, lng: number) {
-  const spawn = require("child_process").spawn;
-  const pythonProcess = spawn("python", ["roads/start.py", lat, lng]);
+  map_x = lat;
+  map_y = lng;
+  console.log("Generating Pellets");
 
-  let ptId = 0;
+  callName();
+}
 
-  pythonProcess.stdout.on("data", data => {
+function callName() {
+  console.log("callname called");
+  // Use child_process.spawn method from
+  // child_process module and assign it
+  // to variable spawn
+  var spawn = require("child_process").spawn;
+
+  // Parameters passed in spawn -
+  // 1. type_of_script
+  // 2. list containing Path of the script
+  //    and arguments for the script
+
+  // E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
+  // so, first name = Mike and last name = Will
+  var process = spawn("python", ["roads/start.py", map_x, map_y]);
+
+  // Takes stdout data from script which executed
+  // with arguments and send this data to res object
+  process.stdout.on("data", data => {
+    console.log("Data returned");
     let splitData = data.split("/\r?\n/");
+    let ptId = 0;
     splitData.forEach(element => {
       let cords = splitData.split(",");
       let pel = new Pellet();
@@ -157,6 +180,10 @@ function generate_pts(lat: number, lng: number) {
       pel.lng = cords[1];
       ptId++;
       game.pellets.concat(pel);
+      console.log([pel.lat, pel.lng]);
     });
+  });
+  process.stderr.on("data", data => {
+    console.log(data.toString());
   });
 }
