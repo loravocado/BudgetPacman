@@ -1,6 +1,7 @@
 import urllib
 import json
 import apis
+import time
 from LatLon import Latitude, Longitude, LatLon
 
 PELLET_DIST = 0.01
@@ -9,7 +10,7 @@ ROADS_API = "https://roads.googleapis.com/v1/nearestRoads"
 cord_x = 45
 corc_y = 45
 
-radius = 1
+radius = 0.5
 
 def carpet_bomb(x, y, r):
     n = int(round(2*(r / PELLET_DIST)))
@@ -48,11 +49,10 @@ def get_snapped(pts):
         
         snap_back = json.loads(urllib.urlopen(ROADS_API + '?points=' + '|'.join(params) + '&key=' + apis.KEY).read())
 
-        hit_num = set()
+        if snap_back.has_key('snappedPoints'):
 
-        if not snap_back.has_key('snappedPoints'):
-            print(snap_back)
-        else:
+            hit_num = set()
+
             for item in snap_back['snappedPoints']:
                 if item['originalIndex'] not in hit_num:
                     hit_num.add(item['originalIndex'])
