@@ -10,6 +10,14 @@ const LATITUDE_DELTA = 0.002;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 var apiKey = 'AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8';
+var first = true;
+
+const num_pellets = 3;
+const test_pellets = [
+  [53.527928, -113.531220],
+  [53.528986, -113.530693],
+  [53.527192, -113.530700]
+];
 
 export default class header extends Component {
   mapStyle = [
@@ -240,7 +248,8 @@ export default class header extends Component {
         longitude: 0,
         latitudeDelta: 0,
         longitudeDelta: 0
-      })
+      }),
+      pellets: []
     };
   }
 
@@ -286,6 +295,20 @@ export default class header extends Component {
     );
   }
 
+  componentDidMount() {
+    for (var i = 0; i < num_pellets; i++) {
+      <Marker.Animated
+        ref={marker => {
+          this.marker = marker;
+        }}
+        coordinate={this.state.coordinate}
+        title={'Lora'}
+        description={'Sucks'}  
+        image={require('../../images/pacman.png')}  
+      />     
+    }
+  }
+
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
@@ -305,14 +328,26 @@ export default class header extends Component {
           region={this.getMapRegion()}
           customMapStyle={this.mapStyle}
         >
+
           <Marker.Animated
             ref={marker => {
               this.marker = marker;
             }}
             coordinate={this.state.coordinate}
             title={'Lora'}
-            description={'Sucks'}
+            description={'Sucks'}  
+            image={require('../../images/pacman.png')}  
           />
+
+          {test_pellets.map((prop) => {
+            return (
+              <Marker.Animated
+                coordinate={{latitude: prop[0], longitude: prop[1]}}
+                image={require('../../images/pellet.png')}  
+              />
+            );
+          })}
+
         </MapView>
 
         <Button
@@ -325,6 +360,7 @@ export default class header extends Component {
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
