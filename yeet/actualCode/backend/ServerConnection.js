@@ -19,6 +19,7 @@ class ServerConnection {
         console.log("Someone else joined");
         this.users = _users;
     }
+
 }
 const serverSocket = ServerConnection.instance;
 
