@@ -6,13 +6,6 @@ var http = require("http")
 
 let io = require("socket.io")(http);
 
-enum GameStates {
-  Lobby, // Waiting for connect
-  Hide, // Pacman runs away from ghosts
-  Chase, // Ghosts chase pacman
-  GameOver // Game is done
-}
-
 console.log("Server started.");
 
 io.on("connection", function(socket: any) {
