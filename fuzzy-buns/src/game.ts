@@ -39,11 +39,13 @@ class GameMaster {
 
 let map_x : number;
 let map_y : number;
+let pelgen : boolean;
 
 let game: GameMaster = null;
 
 export function init_game_state() {
   if (game == null) {
+    pelgen = false;
     game = new GameMaster();
     game.state = States.Lobby;
     game.players = [];
@@ -127,18 +129,14 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 
 function register_user(info) {
   if (game.state == States.Lobby) {
-    let create_pellets: boolean = false;
-    if (game.players.length == 0) {
-      create_pellets = true;
-    }
     let noob: Player = new Player();
     noob.UUID = info.deviceId;
     noob.lat = info.lat;
     noob.lng = info.lng;
     noob.name = info.name;
     game.players.concat(noob);
-
-    if (create_pellets) {
+    if (!pelgen) {
+      pelgen = true;
       generate_pts(info.lat, info.lng);
     }
   }
