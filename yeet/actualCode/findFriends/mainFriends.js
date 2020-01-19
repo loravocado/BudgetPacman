@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
-import gameState from '../backend/GameState.js'
+import gameState from '../backend/GameState.js';
+import GPS from '../gpsScreen/gpsScreen.js';
+
 
 export default class MainFriends extends Component {
   state = {
@@ -32,6 +34,10 @@ export default class MainFriends extends Component {
                 />
               </View>
               <View style={friends.container}>
+                <View style={{flex:10}}>
+                  <Text>Hello</Text>
+                </View>
+                <GPS/>
               </View>
               <View style={friends.borderContainer}>
                 <Image
@@ -40,6 +46,7 @@ export default class MainFriends extends Component {
                 />
               </View>
             </View>
+
            </View>
          </Modal>
 
