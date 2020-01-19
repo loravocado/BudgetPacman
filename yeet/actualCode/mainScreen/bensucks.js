@@ -9,6 +9,7 @@ const LATITUDE_DELTA = 0.002;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 var apiKey = 'AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8';
+var first = false;
 
 export default class header extends Component {
   mapStyle = [
@@ -244,9 +245,13 @@ export default class header extends Component {
   }
 
   UpdateLocation = () => {
-    geolocation.setRNConfiguration(config)
-    
+<<<<<<< HEAD
+  
+
     this.watchID = navigator.geolocation.watchPosition(
+=======
+    navigator.geolocation.watchPosition(
+>>>>>>> 78c3056f42100b52e7a8e96a60f7a371c5de8da7
       position => {
         const { coordinate } = this.state;
         const { latitude, longitude } = position.coords;
@@ -272,16 +277,7 @@ export default class header extends Component {
 
             newCoordinate = {latitude: this.state.latitude, longitude: this.state.longitude}
 
-            if (Platform.OS === "android") {
-              if (this.marker) {
-                this.marker._component.animateMarkerToCoordinate(
-                  newCoordinate,
-                  500
-                );
-              }
-            } else {
-              coordinate.timing(newCoordinate).start();
-            }
+            coordinate.timing(newCoordinate).start();
 
             console.log(this.state.latitude + ', ' + this.state.longitude)
           })
@@ -291,11 +287,7 @@ export default class header extends Component {
       },
       error => console.log(error),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-  }
-
-  componentDidMount() {
-    this.UpdateLocation()
+    );      
   }
 
   getMapRegion = () => ({
@@ -329,9 +321,7 @@ export default class header extends Component {
 
         <Button
           title='Update Location'
-          onPress={async () => {
-            this.UpdateLocation()
-          }}
+          onPress={this.UpdateLocation}
         >
         </Button>
       </View>
