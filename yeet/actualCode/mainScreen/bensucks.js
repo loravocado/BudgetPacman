@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, StyleSheet, View, Platform, Dimensions } from "react-native";
 import MapView, { Marker, AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
+import Pacman from '../../images/pacman.png';
 
 const { width, height } = Dimensions.get("window");
 
@@ -9,7 +10,6 @@ const LATITUDE_DELTA = 0.002;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 var apiKey = 'AIzaSyDVfVr11MvcKgNNlW6TSRwX2a3VhTzs4k8';
-var first = false;
 
 export default class header extends Component {
   mapStyle = [
@@ -317,7 +317,9 @@ export default class header extends Component {
 
         <Button
           title='Update Location'
-          onPress={this.UpdateLocation}
+          onPress={async () => {
+            this.UpdateLocation()
+          }}
         >
         </Button>
       </View>
