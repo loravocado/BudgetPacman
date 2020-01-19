@@ -17,8 +17,7 @@ class ServerConnection {
 
     newUserMessage(_users) {
         console.log("Someone else joined");
-        console.log(_users);
-        users = _users;
+        this.users = _users;
     }
 }
 const serverSocket = ServerConnection.instance;

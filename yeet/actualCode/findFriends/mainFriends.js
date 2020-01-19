@@ -95,6 +95,7 @@ export default class MainFriends extends Component {
             onSubmitEditing={() => {
               gameState.name = this.state.text;
               serverSocket.register();
+              console.log(serverSocket.users[0]);
               this.setIsVisible(true);
             }}
           />
