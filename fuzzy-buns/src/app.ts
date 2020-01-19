@@ -18,8 +18,10 @@ io.on("connection", function(socket: any) {
 
   socket.on("register", function(message: any) {
     users.push(message);
-    game.handle_state_change(game.process_user_update(message, "PLAYER_STATE"));
-    socket.broadcast.emit("new registration", users);
+    var processUpdate = game.process_user_update(message, "PLAYER_STATE");
+    var newState = game.handle_state_change(processUpdate);
+    console.log("hi");
+    socket.emit("new registration", users);
   });
 
   socket.on("start", function(message: any) {

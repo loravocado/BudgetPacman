@@ -5,19 +5,19 @@ class ServerConnection {
     static instance = ServerConnection.instance || new ServerConnection();
 
     socket = io.connect("http://34.82.20.254/");
-    users = [];
 
     constructor() {
         this.socket.on("new registration", this.newUserMessage.bind(this));
+        this.users = [];
     }
 
     register() {
         this.socket.emit("register", gameState);
     }
 
-    newUserMessage(users) {
+    newUserMessage(_users) {
         console.log("Someone else joined");
-        console.log(users);
+        this.users = _users;
     }
 }
 const serverSocket = ServerConnection.instance;

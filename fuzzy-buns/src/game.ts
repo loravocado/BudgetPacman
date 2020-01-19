@@ -65,6 +65,7 @@ export function handle_state_change(new_state: States) {
       return {}; // Return message about user
     }
   }
+  return null;
 }
 
 export function process_user_update(info, msg_type) {
