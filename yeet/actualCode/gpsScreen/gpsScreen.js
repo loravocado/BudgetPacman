@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {View, Image, StyleSheet, Text, Button, Modal} from 'react-native';
 import Ben from '../mainScreen/bensucks.js'
+import gameState from '../backend/GameState.js'
 
 
 export default class gpsScreen extends Component {
@@ -8,6 +9,13 @@ export default class gpsScreen extends Component {
     gpsVisible: false,
     color: '#C11A1A',
     team: 'a Ghost',
+  };
+
+  gameMode(isPacman) {
+    if (isPacman == true) {
+      this.setState({color:'#FCCF00'});
+      this.setState({team:"PacMan"});
+    }
   };
 
   setGpsVisible(visible) {
@@ -20,7 +28,9 @@ export default class gpsScreen extends Component {
         animationType="slide"
         transparent={false}
         visible={this.state.gpsVisible}
-        onRequestClose={() => {this.setGpsVisible(true)}}
+        onRequestClose={() => {
+          this.setModalVisible(true),
+          this.setGpsVisible(true)}}
         >
       <View style={{flex:1, paddingTop:15, backgroundColor:this.state.color}}>
         <View style={{flex:1, backgroundColor:this.state.color, alignItems:'center', justifyContent:'center'}}>
@@ -39,7 +49,10 @@ export default class gpsScreen extends Component {
           <Button
              color='white'
              title="Start"
-             onPress={() => {this.setGpsVisible(true)}}
+             onPress={() => {
+               this.setGpsVisible(true);
+               this.gameMode(gameState.isPacman)
+             }}
            />
         </View>
       </View>
@@ -54,7 +67,8 @@ const main_header = StyleSheet.create({
     borderRadius:5,
     height:35,
     width: 150,
-    paddingHorizontal:50,
+    alignItems:'center',
+    justifyContent:'center',
     marginBottom:10
 
   }
