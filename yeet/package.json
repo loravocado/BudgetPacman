@@ -19,6 +19,9 @@
     "socket.io": "^2.3.0",
     "expo-constants": "~8.0.0"
   },
+  "android": {
+    "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION"]
+  },
   "devDependencies": {
     "babel-preset-expo": "~8.0.0",
     "@babel/core": "^7.0.0"
