@@ -46,7 +46,7 @@ export default class MainFriends extends Component {
                       data={serverSocket.users} // Dictionary with deviceID as key and gameState as value.
                       keyExtractor={item => item.name}
                       renderItem={({ item }) => (
-                        <View style={{ margin: 15, alignItems: 'flex-start' }} >
+                        <View style={{ margin: 15, alignItems: 'flex-start', backgroundColor:'white', borderRadius:10 }} >
                           <Text style={{ fontSize: 20, paddingBottom: 15, color: 'white' }}>{item.name}</Text>
 
                         </View>
