@@ -12,7 +12,7 @@ var users = [];
 
 game.init_game_state();
 
-io.on("connection", function(socket: any) {
+io.on("connection", (socket: any) => {
   console.log("A user connected");
 
   socket.on("register", function(message: any) {
@@ -20,7 +20,7 @@ io.on("connection", function(socket: any) {
     var processUpdate = game.process_user_update(message, "PLAYER_STATE");
     var newState = game.handle_state_change(processUpdate);
     console.log("hi");
-    io.broadcast.emit("new registration", users);
+    socket.broadcast.emit("new registration", users);
   });
 
   socket.on("start", function(message: any) {
