@@ -129,13 +129,17 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 }
 
 function register_user(info) {
+  console.log("Registering player");
+  console.log(game);
   if (game.state == States.Lobby) {
+    console.log(info);
     let noob: Player = new Player();
     noob.UUID_string = info.deviceId;
     noob.lat = info.lat;
     noob.lng = info.lng;
     noob.name = info.name;
-    game.players.concat(noob);
+    game.players.push(noob);
+    console.log(game);
     if (!pelgen) {
       pelgen = true;
       generate_pts(info.lat, info.lng);
