@@ -15,15 +15,16 @@ enum GameStates {
 
 console.log("Server started.");
 
+var numUsers = 0;
+
 io.on("connection", function(socket: any) {
+  var addedUser = false;
+
   console.log("a user connected");
+
   // whenever we receive a 'message' we log it out
   socket.on("register", function(message: any) {
-    console.log("User logged in.");
-    console.log(message);
-  });
-
-  socket.on("update", function(message: any) {
-    socket.emit("broadcast", message);
+    if (addedUser) return;
+    console.log(message.deviceID);
   });
 });
