@@ -151,7 +151,7 @@ function generate_pts(lat: number, lng: number) {
     pythonPath: "python2",
     pythonOptions: ["-u"], // get print results in real-time
     scriptPath: "path/to/my/scripts",
-    args: [lat, lng]
+    args: [lat.toString(), lng.toString()]
   };
 
   PythonShell.run('my_script.py', options, function (err, results) {
