@@ -162,28 +162,28 @@ function generate_pts(lat: number, lng: number) {
     args: [lat.toString(), lng.toString()]
   };
 
-  try {
-    PythonShell.run("my_script.py", options, function(err, results) {
-      if (err) console.log(err);
-    // results is an array consisting of messages collected during execution
-      console.log("results: %j", results);
-    // console.log("Data returned");
-    // let splitData = data.split("/\r?\n/");
-    // let ptId = 0;
-    // splitData.forEach(element => {
-    //   let cords = splitData.split(",");
-    //   let pel = new Pellet();
-    //   pel.id = ptId;
-    //   pel.lat = cords[0];
-    //   pel.lng = cords[1];
-    //   ptId++;
-    //   game.pellets.concat(pel);
-    //   console.log([pel.lat, pel.lng]);
-    // });
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  // try {
+  //   PythonShell.run("my_script.py", options, function(err, results) {
+  //     if (err) console.log(err);
+  //   // results is an array consisting of messages collected during execution
+  //     console.log("results: %j", results);
+  //   // console.log("Data returned");
+  //   // let splitData = data.split("/\r?\n/");
+  //   // let ptId = 0;
+  //   // splitData.forEach(element => {
+  //   //   let cords = splitData.split(",");
+  //   //   let pel = new Pellet();
+  //   //   pel.id = ptId;
+  //   //   pel.lat = cords[0];
+  //   //   pel.lng = cords[1];
+  //   //   ptId++;
+  //   //   game.pellets.concat(pel);
+  //   //   console.log([pel.lat, pel.lng]);
+  //   // });
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
 }
 
 function callName() {
