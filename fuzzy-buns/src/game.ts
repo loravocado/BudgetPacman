@@ -133,11 +133,12 @@ function register_user(info) {
   console.log(game);
   if (game.state == States.Lobby) {
     console.log(info);
-    let noob: Player = new Player();
-    noob.UUID_string = info.deviceId;
-    noob.lat = info.lat;
-    noob.lng = info.lng;
-    noob.name = info.name;
+    let noob: Player = {
+      UUID_string: info.deviceId,
+      lat: info.lat,
+      lng: info.lng,
+      name: info.name
+    };
     game.players.push(noob);
     console.log(game);
     if (!pelgen) {
