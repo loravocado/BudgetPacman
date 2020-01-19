@@ -56,6 +56,7 @@ export function init_game_state() {
 }
 
 export function handle_state_change(new_state: States) {
+  console.log(game.state);
   if (new_state != game.state) {
     game.state = new_state;
     if (game.state == States.Lobby) {
@@ -64,9 +65,7 @@ export function handle_state_change(new_state: States) {
       return null;
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
-      console.log(game.players);
       let pacmanize = game.players[playerIndex];
-      console.log(pacmanize);
       game.main = new Pacman(
         pacmanize.UUID_string,
         pacmanize.name,
@@ -86,7 +85,6 @@ export function handle_state_change(new_state: States) {
 
 export function process_user_update(info, msg_type) {
   let player: Player = null;
-  console.log(info);
   game.players.forEach(element => {
     if (info.deviceID == element.UUID_string) {
       player = element;
@@ -140,10 +138,7 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 }
 
 function register_user(info) {
-  console.log("Registering player");
-  console.log(game);
   if (game.state == States.Lobby) {
-    console.log(info);
     let noob: Player = {
       UUID_string: info.deviceID,
       lat: info.lat,
@@ -151,7 +146,6 @@ function register_user(info) {
       name: info.name
     };
     game.players.push(noob);
-    console.log(game);
     if (!pelgen) {
       pelgen = true;
       generate_pts(info.lat, info.lng);
@@ -160,8 +154,6 @@ function register_user(info) {
 }
 
 function generate_pts(lat: number, lng: number) {
-  console.log("Generating Pellets");
-
   let options = {
     mode: "text",
     pythonPath: "python2",
