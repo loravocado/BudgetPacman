@@ -8,16 +8,17 @@ class ServerConnection {
     users = {};
 
     constructor() {
-        this.socket.on("new registration", function (message) {
-            console.log("Someone else joined");
-            console.log(message);
-        });
+        this.socket.on("new registration", this.newUserMessage.bind(this));
     }
 
     register() {
         this.socket.emit("register", gameState);
     }
 
+    newUserMessage(users) {
+        console.log("Someone else joined");
+        console.log(users);
+    }
 }
 const serverSocket = ServerConnection.instance;
 
