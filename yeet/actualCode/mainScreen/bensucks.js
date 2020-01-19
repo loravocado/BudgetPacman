@@ -232,8 +232,8 @@ export default class header extends Component {
     super(props);
 
     this.state = {
-      latitude: 0,
-      longitude: 0,
+      latitude: 53.526,
+      longitude: -113.530,
       coordinate: new AnimatedRegion({
         latitude: 0,
         longitude: 0,
@@ -244,6 +244,8 @@ export default class header extends Component {
   }
 
   UpdateLocation = () => {
+    geolocation.setRNConfiguration(config)
+    
     this.watchID = navigator.geolocation.watchPosition(
       position => {
         const { coordinate } = this.state;
@@ -285,7 +287,7 @@ export default class header extends Component {
           })
           .catch(error => console.log('Too far from road')) //to catch the errors if any
         })();}
-        
+
       },
       error => console.log(error),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
@@ -346,7 +348,6 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    marginBottom: 70
   },
   map: {
     position: 'absolute',
