@@ -21,7 +21,7 @@ export default class MainFriends extends Component {
            visible={this.state.isVisible}>
            <View style={{flex:1}}>
             <View style={friends.headerContainer}>
-              <Text style={friends.text}> Find Friends </Text>
+              <Text style={friends.text}> Lobby </Text>
             </View>
             <View style={{flex:10, flexDirection:'row', backgroundColor:'#282626'}}>
               <View style={friends.borderContainer}>
