@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
+import { View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight } from 'react-native';
 import gameState from '../backend/GameState.js';
-import serverSocket from '../backend/ServerConnection.js';
 import GPS from '../gpsScreen/gpsScreen.js';
-
+import serverSocket from '../backend/ServerConnection.js';
 
 export default class MainFriends extends Component {
   state = {
@@ -35,10 +34,10 @@ export default class MainFriends extends Component {
                 />
               </View>
               <View style={friends.container}>
-                <View style={{flex:10}}>
+                <View style={{ flex: 10 }}>
                   <Text>Hello</Text>
                 </View>
-                <GPS/>
+                <GPS />
               </View>
               <View style={friends.borderContainer}>
                 <Image
@@ -48,8 +47,8 @@ export default class MainFriends extends Component {
               </View>
             </View>
 
-           </View>
-         </Modal>
+          </View>
+        </Modal>
 
         <View style={friends.inputContainer}>
           <TextInput
@@ -59,7 +58,7 @@ export default class MainFriends extends Component {
             onChangeText={text => this.setState({ text })}
             onSubmitEditing={() => {
               gameState.name = this.state.text;
-              serverSocket.Register();
+              serverSocket.register();
               this.setIsVisible(true);
             }}
           />
