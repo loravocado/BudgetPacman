@@ -15,9 +15,9 @@ class ServerConnection {
         this.socket.emit("register", gameState);
     }
 
-    newUserMessage(users) {
+    newUserMessage(_users) {
         console.log("Someone else joined");
-        console.log(users);
+        this.users = _users;
     }
 }
 const serverSocket = ServerConnection.instance;
