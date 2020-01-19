@@ -1,16 +1,17 @@
 import Constants from 'expo-constants';
 
 class GameState {
-    static instance = ServerConnection.instance || new ServerConnection();
+    static instance = GameState.instance || new GameState();
 
     constructor() {
-        super()
-
         this.location = { latitude: 0.0, longitude: 0.0 };
-        this.DeviceID = Constants.DeviceID;
+        this.deviceID = Constants.installationId;
         this.isPacman = false;
         this.collectedPellets = 0;
+        this.name = "";
     }
-
-
 }
+
+const gameState = GameState.instance;
+
+export default gameState;
