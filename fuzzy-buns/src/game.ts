@@ -1,3 +1,5 @@
+import {PythonShell} from 'python-shell';
+
 export class Player {
   UUID_string: string;
   name: string;
@@ -37,8 +39,6 @@ class GameMaster {
   pellets: Array<Pellet>;
 }
 
-let map_x: number;
-let map_y: number;
 let pelgen: boolean;
 
 let game: GameMaster = null;
@@ -144,46 +144,45 @@ function register_user(info) {
 }
 
 function generate_pts(lat: number, lng: number) {
-  map_x = lat;
-  map_y = lng;
   console.log("Generating Pellets");
 
-  callName();
+  let options = {
+    mode: 'text',
+    pythonPath: 'python2',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: 'path/to/my/scripts',
+    args: [lat, lng]
+  };
+
+  PythonShell.run('my_script.py', options, function (err, results) {
+    if (err) console.log(err);
+    // results is an array consisting of messages collected during execution
+    console.log('results: %j', results);
+    // console.log("Data returned");
+    // let splitData = data.split("/\r?\n/");
+    // let ptId = 0;
+    // splitData.forEach(element => {
+    //   let cords = splitData.split(",");
+    //   let pel = new Pellet();
+    //   pel.id = ptId;
+    //   pel.lat = cords[0];
+    //   pel.lng = cords[1];
+    //   ptId++;
+    //   game.pellets.concat(pel);
+    //   console.log([pel.lat, pel.lng]);
+    // });
+  });
 }
 
 function callName() {
   console.log("callname called");
-  // Use child_process.spawn method from
-  // child_process module and assign it
-  // to variable spawn
-  var spawn = require("child_process").spawn;
 
-  // Parameters passed in spawn -
-  // 1. type_of_script
-  // 2. list containing Path of the script
-  //    and arguments for the script
+  
+   
+  
+  // process.stdout.on("data", data => {
 
-  // E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
-  // so, first name = Mike and last name = Will
-  var process = spawn("python", ["roads/start.py", map_x, map_y]);
-
-  // Takes stdout data from script which executed
-  // with arguments and send this data to res object
-  process.stdout.on("data", data => {
-    console.log("Data returned");
-    let splitData = data.split("/\r?\n/");
-    let ptId = 0;
-    splitData.forEach(element => {
-      let cords = splitData.split(",");
-      let pel = new Pellet();
-      pel.id = ptId;
-      pel.lat = cords[0];
-      pel.lng = cords[1];
-      ptId++;
-      game.pellets.concat(pel);
-      console.log([pel.lat, pel.lng]);
-    });
-  });
+  // });
   process.stderr.on("data", data => {
     console.log(data.toString());
   });
