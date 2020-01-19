@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View, Platform, Dimensions } from "react-native";
+import { Button, StyleSheet, View, Platform, Dimensions, Text } from "react-native";
 import MapView, { Marker, AnimatedRegion, PROVIDER_GOOGLE } from 'react-native-maps';
 import gameState from '../backend/GameState.js';
+import serverSocket from '../backend/ServerConnection.js';
 
 const { width, height } = Dimensions.get("window");
 
@@ -257,7 +258,7 @@ export default class header extends Component {
 
   gameMode(isPacman) {
     if (isPacman == true) {
-      this.setState({indicator:require('../../images/pacman.png')});
+      this.setState({indicator: require('../../images/pacman.png')});
     }
   };
 
@@ -290,6 +291,7 @@ export default class header extends Component {
                   });
 
                   newCoordinate = { latitude: this.state.latitude, longitude: this.state.longitude }
+
 
                   coordinate.timing(newCoordinate).start();
 
@@ -357,6 +359,7 @@ export default class header extends Component {
   render() {
     return (
       <View style={styles.container}>
+        
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -386,7 +389,37 @@ export default class header extends Component {
             );
           })}
 
+          {serverSocket.users.map((prop) => {
+            console.log(prop)
+            if (this.gameMode(gameState.isPacman) == false && prop.isPacman == true) {
+
+            } else {
+              
+              return (
+                <Marker.Animated
+                  coordinate={{latitude: prop.lat, longitude: prop.long}}
+                  image={require('../../images/small_red.png')}
+                />
+              );            
+            }
+          })}
+
         </MapView>
+
+        {/* <Button
+          title='T3l3p0rt h4xks'
+          onPress={async () => {
+            var newCoordinate = {
+              latitude,
+              longitude
+            };
+            
+            newCoordinate = { latitude: 53.527192 , longitude: -113.530700 }
+            coordinate.timing(newCoordinate).start();
+
+            console.log('reeee2')
+          }}
+        /> */}
 
         <Button
           title='Update Location'
@@ -395,7 +428,7 @@ export default class header extends Component {
             this.gameMode(gameState.isPacman)
           }}
         >
-        </Button>
+        </Button>   
       </View>
     );
   }
