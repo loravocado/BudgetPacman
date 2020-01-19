@@ -9,6 +9,7 @@ let io = require("socket.io")(http);
 console.log("Server started.");
 
 var users = [];
+var mostRecentState;
 
 game.init_game_state();
 
@@ -18,7 +19,7 @@ io.on("connection", (socket: any) => {
   socket.on("register", function(message: any) {
     users.push(message);
     var processUpdate = game.process_user_update(message, "PLAYER_STATE");
-    var newState = game.handle_state_change(processUpdate);
+    var mostRecentState = game.handle_state_change(processUpdate);
     console.log("hi");
     socket.broadcast.emit("new registration", users);
   });
@@ -26,7 +27,7 @@ io.on("connection", (socket: any) => {
   socket.on("start", function(message: any) {
     console.log("Starting game...");
     socket.emit("sync");
-    game.process_user_update(message, "GAME_STATE");
+    game.process_user_update(mostRecentState, "GAME_STATE");
     var newstate = game.handle_state_change(game.States.Hide);
     console.log(newstate);
     socket.emit("start hide");
