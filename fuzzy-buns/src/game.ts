@@ -4,18 +4,25 @@ export class Player {
   lat: number;
   lng: number;
 }
-
 export class Pacman extends Player {
   lives: number;
-}
 
-export class Ghost extends Player {}
+  constructor(player: Player) {
+    super();
+    this.UUID = player.UUID;
+    this.lat = player.lat;
+    this.lng = player.lng;
+    this.name = player.name;
+    this.lives = 3;
+  }
+}
 
 export class Pellet {
   lat: number;
   lng: number;
   id: number;
 }
+
 export enum States {
   Lobby, // Waiting for connect
   Hide, // Pacman runs away from ghosts
@@ -47,8 +54,15 @@ export function handle_state_change(new_state: States) {
       game.players = [];
       game.main = null;
       return null;
-    } else {
-      return game.state;
+    } else if (game.state == States.Hide) {
+      let playerIndex = Math.floor(Math.random() * game.players.length);
+      game.main = new Pacman(game.players[playerIndex]);
+      game.players[playerIndex] = game.main;
+      return {};
+    } else if (game.state == States.Chase) {
+      return {};
+    } else if (game.state == States.GameOver) {
+      return {}; // Return message about user
     }
   }
 }
