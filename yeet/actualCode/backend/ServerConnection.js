@@ -5,10 +5,10 @@ class ServerConnection {
     static instance = ServerConnection.instance || new ServerConnection();
 
     socket = io.connect("http://34.82.20.254/");
-    users = [];
 
     constructor() {
         this.socket.on("new registration", this.newUserMessage.bind(this));
+        this.users = [];
     }
 
     register() {
