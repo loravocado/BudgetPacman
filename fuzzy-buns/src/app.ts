@@ -17,14 +17,10 @@ console.log("Server started.");
 
 var numUsers = 0;
 
-io.on("connection", function(socket: any) {
-  var addedUser = false;
-
+io.on("connection", (socket: any) => {
   console.log("a user connected");
 
-  // whenever we receive a 'message' we log it out
-  socket.on("register", function(message: any) {
-    if (addedUser) return;
+  socket.on("register", (message: any) => {
     console.log(message.deviceID);
   });
 });
