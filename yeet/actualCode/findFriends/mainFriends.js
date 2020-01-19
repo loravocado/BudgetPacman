@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
+import gameState from '../backend/GameState.js'
 
 export default class MainFriends extends Component {
   state = {
@@ -49,7 +50,9 @@ export default class MainFriends extends Component {
              value={this.state.text}
              onChangeText={text => this.setState({ text })}
              onSubmitEditing = {() => {
-            this.setIsVisible(true);
+               gameState.name = this.state.text;
+               console.log(gameState.name);
+               this.setIsVisible(true);
           }}
            />
          </View>
