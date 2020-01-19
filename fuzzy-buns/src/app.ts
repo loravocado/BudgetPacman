@@ -8,13 +8,12 @@ let io = require("socket.io")(http);
 
 console.log("Server started.");
 
-io.on("connection", function(socket: any) {
+var numUsers = 0;
+
+io.on("connection", (socket: any) => {
   console.log("a user connected");
-  // whenever we receive a 'message' we log it out
-  socket.on("login", function(message: any) {
-    console.log(message);
-  });
-  socket.on("update", function(message: any) {
-    socket.emit("broadcast", message);
+
+  socket.on("register", (message: any) => {
+    console.log(message.deviceID);
   });
 });

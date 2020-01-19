@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight } from 'react-native';
-import gameState from '../backend/GameState.js'
+import {View, StyleSheet, FlatList, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
+import gameState from '../backend/GameState.js';
 import serverSocket from '../backend/ServerConnection.js';
+import GPS from '../gpsScreen/gpsScreen.js';
+
+var SampleArray = ["Hello", "I love", "Apples"];
 
 export default class MainFriends extends Component {
   state = {
     text: '',
     isVisible: false,
+    friend: '',
   };
 
   setIsVisible(visible) {
     this.setState({ isVisible: visible });
   }
+
+  AddItemsToArray=()=>{
+     SampleArray = SampleArray.concat(this.state.friend)
+ }
 
   render() {
 
@@ -33,6 +41,28 @@ export default class MainFriends extends Component {
                 />
               </View>
               <View style={friends.container}>
+                <View style={{flex:10}}>
+                <View style={{marginLeft:40, marginRight:40, marginTop:5}}>
+                   <FlatList
+                     data={SampleArray}
+                     keyExtractor={item => item}
+                     renderItem={({item}) =>(
+                       <View style={{margin:15, alignItems:'flex-start'}} >
+                           <Text style={{fontSize:20, paddingBottom:15,color:'white' }}>{item}</Text>
+                           <View
+                             style={{
+
+                             }}
+                           />
+                       </View>
+                   )}
+
+                   />
+                 </View>
+
+
+                </View>
+                <GPS/>
               </View>
               <View style={friends.borderContainer}>
                 <Image
@@ -41,8 +71,9 @@ export default class MainFriends extends Component {
                 />
               </View>
             </View>
-          </View>
-        </Modal>
+
+           </View>
+         </Modal>
 
         <View style={friends.inputContainer}>
           <TextInput
@@ -92,7 +123,7 @@ const friends = StyleSheet.create({
   container: {
     flex: 15,
     backgroundColor: '#282626',
-    alignItems: 'center',
+
     justifyContent: 'center',
   },
   headerContainer: {
