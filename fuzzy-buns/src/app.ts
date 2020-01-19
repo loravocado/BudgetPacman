@@ -19,14 +19,15 @@ io.on("connection", (socket: any) => {
   socket.on("register", function(message: any) {
     users.push(message);
     var processUpdate = game.process_user_update(message, "PLAYER_STATE");
-    var mostRecentState = game.handle_state_change(processUpdate);
+    mostRecentState = game.handle_state_change(processUpdate);
     console.log("hi");
     socket.broadcast.emit("new registration", users);
   });
 
-  socket.on("start", function(message: any) {
+  socket.on("start", function() {
     console.log("Starting game...");
     socket.emit("sync");
+    console.log(mostRecentState);
     game.process_user_update(mostRecentState, "GAME_STATE");
     var newstate = game.handle_state_change(game.States.Hide);
     console.log(newstate);
