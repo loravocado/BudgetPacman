@@ -89,10 +89,7 @@ export function process_user_update(info, msg_type) {
     if (msg_type == "PLAYER_STATE") {
       player.lat = info.lat;
       player.lng = info.lng;
-      if (
-        player.UUID_string == game.main.UUID_string &&
-        (game.state == States.Hide || game.state == States.Chase)
-      ) {
+      if (game.state == States.Hide || game.state == States.Chase) {
         info.eatenPellets.forEach(element => {
           let pel = game.pellets.find(element2 => element2.id == element.id);
           game.pellets.splice(game.pellets.indexOf(pel), 1);
