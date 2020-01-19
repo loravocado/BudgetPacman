@@ -26,7 +26,9 @@ io.on("connection", (socket: any) => {
 
   socket.on("start", function() {
     console.log("Starting game...");
-    socket.emit("sync");
+    console.log(users);
+    // users[0].is;
+    socket.broadcast.emit("sync", users);
     game.process_user_update(users, "GAME_STATE");
     var newstate = game.handle_state_change(game.States.Hide);
     console.log(newstate);

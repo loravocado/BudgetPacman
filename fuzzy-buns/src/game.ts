@@ -64,15 +64,14 @@ export function handle_state_change(new_state: States) {
       game.main = null;
       return null;
     } else if (game.state == States.Hide) {
-      let playerIndex = Math.floor(Math.random() * game.players.length);
-      let pacmanize = game.players[playerIndex];
+      let pacmanize = game.players[0];
       game.main = new Pacman(
         pacmanize.UUID_string,
         pacmanize.name,
         pacmanize.lat,
         pacmanize.lng
       );
-      game.players[playerIndex] = game.main;
+      game.players[0] = game.main;
       return game.players;
     } else if (game.state == States.Chase) {
       return {};
