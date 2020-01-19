@@ -94,23 +94,17 @@ export function process_user_update(info, msg_type) {
           let pel = game.pellets.find(element2 => element2.id == element.id);
           game.pellets.splice(game.pellets.indexOf(pel), 1);
         });
-    } else if (
-      msg_type == "GAME_STATE" &&
-      game.state == States.Lobby &&
-      game.players.length > 1
-    ) {
-      return States.Hide;
+      } else if (
+        msg_type == "GAME_STATE" &&
+        game.state == States.Lobby &&
+        game.players.length > 1
+      ) {
+        return States.Hide;
+      }
     }
-  }
 
-  return game.state;
-}
-
-function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
-  if (Math.abs(lat1 - lat2) < 0.0001 && Math.abs(lng1 - lng2) < 0.0001) {
-    return true;
+    return game.state;
   }
-  return false;
 }
 
 function register_user(info) {
@@ -124,51 +118,6 @@ function register_user(info) {
     game.players.push(noob);
     if (!pelgen) {
       pelgen = true;
-      generate_pts(info.lat, info.lng);
     }
   }
-}
-
-function generate_pts(lat: number, lng: number) {
-  let options = {
-    mode: "text",
-    pythonPath: "python2",
-    pythonOptions: ["-u"], // get print results in real-time
-    scriptPath: "roads/script.py",
-    args: [lat.toString(), lng.toString()]
-  };
-
-  // try {
-  //   PythonShell.run("my_script.py", options, function(err, results) {
-  //     if (err) console.log(err);
-  //   // results is an array consisting of messages collected during execution
-  //     console.log("results: %j", results);
-  //   // console.log("Data returned");
-  //   // let splitData = data.split("/\r?\n/");
-  //   // let ptId = 0;
-  //   // splitData.forEach(element => {
-  //   //   let cords = splitData.split(",");
-  //   //   let pel = new Pellet();
-  //   //   pel.id = ptId;
-  //   //   pel.lat = cords[0];
-  //   //   pel.lng = cords[1];
-  //   //   ptId++;
-  //   //   game.pellets.concat(pel);
-  //   //   console.log([pel.lat, pel.lng]);
-  //   // });
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-  // }
-}
-
-function callName() {
-  console.log("callname called");
-
-  // process.stdout.on("data", data => {
-
-  // });
-  process.stderr.on("data", data => {
-    console.log(data.toString());
-  });
 }
