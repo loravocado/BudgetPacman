@@ -61,6 +61,7 @@ export function handle_state_change(new_state: States) {
       return null;
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
+      console.log(game.players[playerIndex]);
       game.main = new Pacman(game.players[playerIndex]);
       game.players[playerIndex] = game.main;
       return game.players;
