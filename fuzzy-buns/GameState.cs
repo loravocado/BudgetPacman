@@ -1,3 +1,7 @@
+using System.Net;  
+using System.Net.Sockets;  
+using System.Text;  
+using System.Threading; 
 
 namespace fuzzy_buns
 {
@@ -17,7 +21,11 @@ namespace fuzzy_buns
     {
         private int x;
         private int y;
+        private Socket socket;
 
-        private bool ghost;
+        public Player(Socket connection ) => this.socket = connection;
+
+        public PlayerState
+
     }
 }
