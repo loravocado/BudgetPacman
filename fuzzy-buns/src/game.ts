@@ -86,6 +86,7 @@ export function handle_state_change(new_state: States) {
 
 export function process_user_update(info, msg_type) {
   let player: Player = null;
+  console.log(info);
   game.players.forEach(element => {
     if (info.deviceID == element.UUID_string) {
       player = element;
