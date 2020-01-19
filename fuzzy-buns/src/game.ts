@@ -184,6 +184,6 @@ function callName() {
     });
   });
   process.stderr.on("data", data => {
-    console.log(data);
+    console.log(data.toString());
   });
 }
