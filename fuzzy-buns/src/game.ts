@@ -1,4 +1,4 @@
-import {Pellet, Pacman, Ghost} from "./pacTypes"
+import {Pellet, Pacman } from "./pacTypes"
 
 export class Player {
     UUID : string;
@@ -39,6 +39,9 @@ export function handle_state_change(new_state : States) {
             game.main = null;
             return null;
         } else if (game.state == States.Hide) {
+            let playerIndex = Math.floor(Math.random() * game.players.length);
+            game.main = new Pacman(game.players[playerIndex]);
+            game.players[playerIndex] = game.main;
             return {};
         } else if (game.state == States.Chase) {
             return {};
