@@ -16,6 +16,6 @@ io.on("connection", function(socket: any) {
 
   socket.on("register", function(message: any) {
     users[message.deviceID] = message;
-    socket.emit("new registration", message);
+    socket.broadcast.emit("new registration", users);
   });
 });

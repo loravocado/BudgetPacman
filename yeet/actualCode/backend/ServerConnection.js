@@ -8,10 +8,10 @@ class ServerConnection {
     users = {};
 
     constructor() {
+        this.socket.on("new registration", this.newUserMessage.bind(this));
     }
 
     register() {
-        this.socket.on("new registration", this.newUserMessage.bind(this));
         this.socket.emit("register", gameState);
     }
 

@@ -44,8 +44,8 @@ export default class MainFriends extends Component {
                 <View style={{ flex: 10 }}>
                   <View style={{ marginLeft: 40, marginRight: 40, marginTop: 5 }}>
                     <FlatList
-                      data={SampleArray}
-                      keyExtractor={item => item}
+                      data={serverSocket.users} // Dictionary with deviceID as key and gameState as value.
+                      keyExtractor={item => item.value.name}
                       renderItem={({ item }) => (
                         <View style={{ margin: 15, alignItems: 'flex-start' }} >
                           <Text style={{ fontSize: 20, paddingBottom: 15, color: 'white' }}>{item}</Text>
