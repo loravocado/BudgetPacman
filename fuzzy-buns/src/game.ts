@@ -66,6 +66,7 @@ export function handle_state_change(new_state: States) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
       console.log(game.players);
       let pacmanize = game.players[playerIndex];
+      console.log(pacmanize);
       game.main = new Pacman(
         pacmanize.UUID_string,
         pacmanize.name,
