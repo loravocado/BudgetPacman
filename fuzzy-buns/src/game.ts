@@ -129,6 +129,7 @@ function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
 }
 
 function register_user(info) {
+  console.log("Registering player");
   if (game.state == States.Lobby) {
     let noob: Player = new Player();
     noob.UUID_string = info.deviceId;
