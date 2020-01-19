@@ -2,13 +2,11 @@ import urllib
 import json
 import apis
 import time
+import sys
 from LatLon import Latitude, Longitude, LatLon
 
 PELLET_DIST = 0.01
 ROADS_API = "https://roads.googleapis.com/v1/nearestRoads"
-
-cord_x = 45
-corc_y = 45
 
 radius = 0.5
 
@@ -66,6 +64,6 @@ def final_pass(pts):
 
 
 if __name__ == "__main__":
-    pellets = carpet_bomb(cord_x, corc_y, radius)
+    pellets = carpet_bomb(float(sys.argv[1]), float(sys.argv[2]), radius)
     snapped = get_snapped(pellets)
     final_pass(snapped)
