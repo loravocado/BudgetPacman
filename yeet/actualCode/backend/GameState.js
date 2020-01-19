@@ -5,13 +5,11 @@ class GameState {
 
     constructor() {
         this.location = { latitude: 0.0, longitude: 0.0 };
-        this.DeviceID = Constants.DeviceID;
+        this.deviceID = Constants.installationId;
         this.isPacman = false;
         this.collectedPellets = 0;
         this.name = "";
     }
-
-
 }
 
 const gameState = GameState.instance;
