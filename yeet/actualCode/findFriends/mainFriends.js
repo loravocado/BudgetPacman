@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {View, StyleSheet, Image, Button, Text, Modal, TextInput, TouchableHighlight} from 'react-native';
 import gameState from '../backend/GameState.js';
+import serverSocket from '../backend/ServerConnection.js';
 import GPS from '../gpsScreen/gpsScreen.js';
 
 
