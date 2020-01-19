@@ -95,7 +95,6 @@ export function process_user_update(info, msg_type) {
           game.pellets.splice(game.pellets.indexOf(pel), 1);
         });
       } else if (
-        game.state == States.Chase &&
         compareCords(player.lat, player.lng, game.main.lat, game.main.lng)
       ) {
         game.main.lives--;
