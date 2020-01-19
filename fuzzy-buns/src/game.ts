@@ -1,4 +1,4 @@
-import {PythonShell} from 'python-shell';
+import { PythonShell } from "python-shell";
 
 export class Player {
   UUID_string: string;
@@ -61,7 +61,7 @@ export function handle_state_change(new_state: States) {
       return null;
     } else if (game.state == States.Hide) {
       let playerIndex = Math.floor(Math.random() * game.players.length);
-      console.log(game.players[playerIndex]);
+      console.log(game.players);
       game.main = new Pacman(game.players[playerIndex]);
       game.players[playerIndex] = game.main;
       return game.players;
@@ -154,32 +154,29 @@ function generate_pts(lat: number, lng: number) {
     args: [lat.toString(), lng.toString()]
   };
 
-  PythonShell.run('my_script.py', options, function (err, results) {
-    if (err) console.log(err);
-    // results is an array consisting of messages collected during execution
-    console.log('results: %j', results);
-    // console.log("Data returned");
-    // let splitData = data.split("/\r?\n/");
-    // let ptId = 0;
-    // splitData.forEach(element => {
-    //   let cords = splitData.split(",");
-    //   let pel = new Pellet();
-    //   pel.id = ptId;
-    //   pel.lat = cords[0];
-    //   pel.lng = cords[1];
-    //   ptId++;
-    //   game.pellets.concat(pel);
-    //   console.log([pel.lat, pel.lng]);
-    // });
-  });
+  //PythonShell.run("my_script.py", options, function(err, results) {
+  //if (err) console.log(err);
+  // results is an array consisting of messages collected during execution
+  // console.log("results: %j", results);
+  // console.log("Data returned");
+  // let splitData = data.split("/\r?\n/");
+  // let ptId = 0;
+  // splitData.forEach(element => {
+  //   let cords = splitData.split(",");
+  //   let pel = new Pellet();
+  //   pel.id = ptId;
+  //   pel.lat = cords[0];
+  //   pel.lng = cords[1];
+  //   ptId++;
+  //   game.pellets.concat(pel);
+  //   console.log([pel.lat, pel.lng]);
+  // });
+  // });
 }
 
 function callName() {
   console.log("callname called");
 
-  
-   
-  
   // process.stdout.on("data", data => {
 
   // });
