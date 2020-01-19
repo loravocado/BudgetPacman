@@ -64,15 +64,6 @@ export function handle_state_change(new_state: States) {
       game.main = null;
       return null;
     } else if (game.state == States.Hide) {
-      let playerIndex = Math.floor(Math.random() * game.players.length);
-      let pacmanize = game.players[playerIndex];
-      game.main = new Pacman(
-        pacmanize.UUID_string,
-        pacmanize.name,
-        pacmanize.lat,
-        pacmanize.lng
-      );
-      game.players[playerIndex] = game.main;
       return game.players;
     } else if (game.state == States.Chase) {
       return {};
@@ -98,43 +89,22 @@ export function process_user_update(info, msg_type) {
     if (msg_type == "PLAYER_STATE") {
       player.lat = info.lat;
       player.lng = info.lng;
-      if (
-        player.UUID_string == game.main.UUID_string &&
-        (game.state == States.Hide || game.state == States.Chase)
-      ) {
+      if (game.state == States.Hide || game.state == States.Chase) {
         info.eatenPellets.forEach(element => {
           let pel = game.pellets.find(element2 => element2.id == element.id);
           game.pellets.splice(game.pellets.indexOf(pel), 1);
         });
-        if (game.pellets.length == 0) {
-          return States.GameOver;
-        }
       } else if (
-        game.state == States.Chase &&
-        compareCords(player.lat, player.lng, game.main.lat, game.main.lng)
+        msg_type == "GAME_STATE" &&
+        game.state == States.Lobby &&
+        game.players.length > 1
       ) {
-        game.main.lives--;
-        if (game.main.lives == 0) {
-          return States.GameOver;
-        }
+        return States.Hide;
       }
-    } else if (
-      msg_type == "GAME_STATE" &&
-      game.state == States.Lobby &&
-      game.players.length > 1
-    ) {
-      return States.Hide;
     }
-  }
 
-  return game.state;
-}
-
-function compareCords(lat1: number, lng1: number, lat2: number, lng2: number) {
-  if (Math.abs(lat1 - lat2) < 0.0001 && Math.abs(lng1 - lng2) < 0.0001) {
-    return true;
+    return game.state;
   }
-  return false;
 }
 
 function register_user(info) {
@@ -148,51 +118,6 @@ function register_user(info) {
     game.players.push(noob);
     if (!pelgen) {
       pelgen = true;
-      generate_pts(info.lat, info.lng);
     }
   }
-}
-
-function generate_pts(lat: number, lng: number) {
-  let options = {
-    mode: "text",
-    pythonPath: "python2",
-    pythonOptions: ["-u"], // get print results in real-time
-    scriptPath: "roads/script.py",
-    args: [lat.toString(), lng.toString()]
-  };
-
-  // try {
-  //   PythonShell.run("my_script.py", options, function(err, results) {
-  //     if (err) console.log(err);
-  //   // results is an array consisting of messages collected during execution
-  //     console.log("results: %j", results);
-  //   // console.log("Data returned");
-  //   // let splitData = data.split("/\r?\n/");
-  //   // let ptId = 0;
-  //   // splitData.forEach(element => {
-  //   //   let cords = splitData.split(",");
-  //   //   let pel = new Pellet();
-  //   //   pel.id = ptId;
-  //   //   pel.lat = cords[0];
-  //   //   pel.lng = cords[1];
-  //   //   ptId++;
-  //   //   game.pellets.concat(pel);
-  //   //   console.log([pel.lat, pel.lng]);
-  //   // });
-  //   });
-  // } catch (err) {
-  //   console.log(err);
-  // }
-}
-
-function callName() {
-  console.log("callname called");
-
-  // process.stdout.on("data", data => {
-
-  // });
-  process.stderr.on("data", data => {
-    console.log(data.toString());
-  });
 }
