@@ -1,10 +1,15 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
+import MainHeader from './actualCode/mainScreen/header.js'
+import MainBody from './actualCode/mainScreen/body.js'
+import Ignore from './actualCode/mainScreen/bensucks.js'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <MainHeader/>
+      <MainBody/>
+      <Ignore/>
     </View>
   );
 }
@@ -12,8 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#282626',
+    
   },
 });
