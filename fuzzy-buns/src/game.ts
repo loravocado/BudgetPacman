@@ -143,7 +143,7 @@ function register_user(info) {
   if (game.state == States.Lobby) {
     console.log(info);
     let noob: Player = {
-      UUID_string: info.deviceId,
+      UUID_string: info.deviceID,
       lat: info.lat,
       lng: info.lng,
       name: info.name
