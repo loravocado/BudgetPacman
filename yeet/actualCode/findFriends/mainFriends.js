@@ -21,8 +21,23 @@ export default class MainFriends extends Component {
            visible={this.state.isVisible}>
            <View style={{flex:1}}>
             <View style={friends.headerContainer}>
+              <Text style={friends.text}> Find Friends </Text>
             </View>
-            <View style={friends.container}>
+            <View style={{flex:10, flexDirection:'row', backgroundColor:'#282626'}}>
+              <View style={friends.borderContainer}>
+                <Image
+                 style={friends.border}
+                 source={require('../../images/border.png')}
+                />
+              </View>
+              <View style={friends.container}>
+              </View>
+              <View style={friends.borderContainer}>
+                <Image
+                 style={friends.border}
+                 source={require('../../images/border.png')}
+                />
+              </View>
             </View>
            </View>
          </Modal>
@@ -66,8 +81,12 @@ const friends = StyleSheet.create({
     margin:5,
 
   },
+  text: {
+    fontSize:25,
+    color: 'white'
+  },
   container: {
-    flex:10,
+    flex:15,
     backgroundColor:'#282626',
     alignItems:'center',
     justifyContent:'center',
