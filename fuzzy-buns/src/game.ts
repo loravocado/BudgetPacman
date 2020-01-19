@@ -94,14 +94,6 @@ export function process_user_update(info, msg_type) {
           let pel = game.pellets.find(element2 => element2.id == element.id);
           game.pellets.splice(game.pellets.indexOf(pel), 1);
         });
-      } else if (
-        compareCords(player.lat, player.lng, game.main.lat, game.main.lng)
-      ) {
-        game.main.lives--;
-        if (game.main.lives == 0) {
-          return States.GameOver;
-        }
-      }
     } else if (
       msg_type == "GAME_STATE" &&
       game.state == States.Lobby &&
