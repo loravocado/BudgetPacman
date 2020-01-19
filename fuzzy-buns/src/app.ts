@@ -27,8 +27,7 @@ io.on("connection", (socket: any) => {
   socket.on("start", function() {
     console.log("Starting game...");
     socket.emit("sync");
-    console.log(mostRecentState);
-    game.process_user_update(mostRecentState, "GAME_STATE");
+    game.process_user_update(users, "GAME_STATE");
     var newstate = game.handle_state_change(game.States.Hide);
     console.log(newstate);
     socket.emit("start hide");
