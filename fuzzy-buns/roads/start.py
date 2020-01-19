@@ -1,10 +1,10 @@
 import urllib
 import json
+import apis
 from LatLon import Latitude, Longitude, LatLon
 
 PELLET_DIST = 0.01
 ROADS_API = "https://roads.googleapis.com/v1/nearestRoads"
-ROADS_API_KEY = "AIzaSyD2bOeRG2HdczvPBMfE1E0CppzngijYcp0"
 
 cord_x = 45
 corc_y = 45
@@ -34,26 +34,29 @@ def get_snapped(pts):
 
     n = len(pts)
 
-    # while n - processed > 0:
-    if n - processed > 100:
-        pt_list = pts[processed : processed + 100]
-        params = [None] * 100
-    else:
-        pt_list = pts[processed : ]
-        params = [None] * len(pt_list)
+    while n - processed > 0:
+        if n - processed > 100:
+            pt_list = pts[processed : processed + 100]
+            params = [None] * 100
+        else:
+            pt_list = pts[processed : ]
+            params = [None] * len(pt_list)
 
-    for pt in pt_list:
-        params[processed % 100] = str(pt.lat) + ',' + str(pt.lon)
-        processed += 1
-    
-    snap_back = json.loads(urllib.urlopen(ROADS_API + '?points=' + '|'.join(params) + '&key=' + ROADS_API_KEY).read())
+        for pt in pt_list:
+            params[processed % 100] = str(pt.lat) + ',' + str(pt.lon)
+            processed += 1
+        
+        snap_back = json.loads(urllib.urlopen(ROADS_API + '?points=' + '|'.join(params) + '&key=' + apis.KEY).read())
 
-    hit_num = set()
+        hit_num = set()
 
-    for item in snap_back['snappedPoints']:
-        if item['originalIndex'] not in hit_num:
-            hit_num.add(item['originalIndex'])
-            snapped.append(LatLon(item['location']['latitude'], item['location']['longitude']))
+        if not snap_back.has_key('snappedPoints'):
+            print(snap_back)
+        else:
+            for item in snap_back['snappedPoints']:
+                if item['originalIndex'] not in hit_num:
+                    hit_num.add(item['originalIndex'])
+                    snapped.append(LatLon(item['location']['latitude'], item['location']['longitude']))
     
     return snapped
 
@@ -61,10 +64,8 @@ def final_pass(pts):
     for pt in pts:
         print(pt)
 
-    return None
-
 
 if __name__ == "__main__":
     pellets = carpet_bomb(cord_x, corc_y, radius)
     snapped = get_snapped(pellets)
-    final = final_pass(snapped)
+    final_pass(snapped)
