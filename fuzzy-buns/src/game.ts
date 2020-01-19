@@ -1,5 +1,3 @@
-import { Pellet, Pacman, Ghost } from "./pacTypes";
-
 export class Player {
   UUID: string;
   name: string;
@@ -7,6 +5,17 @@ export class Player {
   lng: number;
 }
 
+export class Pacman extends Player {
+  lives: number;
+}
+
+export class Ghost extends Player {}
+
+export class Pellet {
+  lat: number;
+  lng: number;
+  id: number;
+}
 export enum States {
   Lobby, // Waiting for connect
   Hide, // Pacman runs away from ghosts
