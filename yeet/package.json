@@ -10,7 +10,7 @@
   "dependencies": {
     "@types/socket.io": "^2.1.4",
     "expo": "~36.0.0",
-    "expo-cli": "^3.11.7",
+    "expo-cli": "^6.0.8",
     "expo-constants": "~8.0.0",
     "google": "^2.1.0",
     "react": "~16.9.0",
